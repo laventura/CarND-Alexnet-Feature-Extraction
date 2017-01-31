@@ -15,7 +15,13 @@ x = tf.placeholder(tf.float32, (None, 227, 227, 3))
 # originally used to train on ImageNet.
 probs = AlexNet(x, feature_extract=False)
 init = tf.global_variables_initializer()
-sess = tf.Session()
+
+## Atul  ## Kludge for GPU
+config = tf.ConfigProto()
+config.gpu_options.allow_growth=True
+config.gpu_options.per_process_gpu_memory_fraction = 0.1
+
+sess = tf.Session(config=config)
 sess.run(init)
 
 # Read Images
